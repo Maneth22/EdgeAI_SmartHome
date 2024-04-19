@@ -82,6 +82,11 @@ def home():
     outPut_dic={"Temperature":temperature_values,
                 "Current":Current_values}
     return jsonify(outPut_dic)
+    
+@app.route("/dashboard")
+def dashboard():
+    start_temperature_record()
+    return jsonify({"temperature_values": temperature_values})
 
 
 
