@@ -28,3 +28,28 @@ if selected == "Notifications":
 if selected == "Reports":
     st.markdown("## Reports")
     rpt.dropdown()
+
+
+FinalTemp =[]
+
+
+
+
+df_Current = pd.read_csv("Current.csv")
+df_Temp = pd.read_csv("Temp.csv")
+
+df_Temp["Temperature"] = df_Temp["Humidity"]
+
+
+fig_col1, fig_col2 = st.columns(2)
+with fig_col1:
+                placeholder = st.empty()
+                st.markdown("### Temperature Chart")
+                fig = px.line(data_frame=df_Temp, y="Temperature", x="Time")
+                st.write(fig)
+                
+with fig_col2:
+                CurrentViewer = st.empty()
+                st.markdown("### Current Chart")
+                fig2 = px.density_heatmap(data_frame=df_Current, y="Current", x="Time")
+                st.write(fig2)
