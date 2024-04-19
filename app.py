@@ -23,8 +23,29 @@ temperature_values = []
 Current_values = []
 i2c = busio.I2C(board.SCL, board.SDA)
 led = LED(10)
+ads = ADS.ADS1015(i2c)
+print(led.is_active)
+# Set the gain (adjust as needed)
+GAIN = 3
+
+# Create an analog input channel
+current_chan = AnalogIn(ads, ADS.P2)
 app = Flask(__name__)
 
+def Current_loop():
+    try:
+        while True:
+            # Read current
+            if led.is_active :
+                current = current_chan.voltage / 0.185
+            else:
+                current = 0 #current_chan.voltage / 0.185  # ACS712 sensitivity
+            Current_values.append(current)
+            print(f"Current: {current:.2f} A")
+            time.sleep(0.5)
+
+    except KeyboardInterrupt:
+        print("\nMeasurement stopped by user.")
 
 def Temperature_loop():
     i = 0
@@ -70,6 +91,9 @@ def motionSense():
 def start_motion_sense():
     motionThread = threading.Thread(target=motionSense)
     motionThread.start()
+def start_current_record():
+    currentThread =threading.Thread(target=Current_loop)
+    currentThread.start()
 
 def start_temperature_record():
     tempThread = threading.Thread(target=Temperature_loop)
