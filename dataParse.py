@@ -53,6 +53,28 @@ with fig_col2:
                 fig2 = px.density_heatmap(data_frame=df_Current, y="Current", x="Time")
                 st.write(fig2)
 
+while True:
+    try:
+        response = requests.get("http://127.0.0.1:5000/send_data")
+        if response.status_code == 200:
+            data = response.json()  # Parsing JSON from the response
+            
+            x= data.get('Temperature')
+            y = data.get('Current')
+            y = str(y[-1])
+            #FinalTemp =x[-1]
+            #st.write('Received data:', x[-1])
+            # Display each element in the received array
+            time.sleep(0.7)
+            placeholder.write(x[-1])
+            CurrentViewer.write(y)
+            #FinalTemp.append(x[-1])
+        else:
+                st.error(f'Failed to send request. Status code: {response.status_code}')
+    except requests.exceptions.RequestException as e:
+        st.error(f'Request failed: {e}')
+    except json.decoder.JSONDecodeError as e:
+        st.error(f'Failed to decode JSON: {e}')
 #
 # def thread_liveTemp():
 #     tempThread =threading.Thread(target=getTemp)
