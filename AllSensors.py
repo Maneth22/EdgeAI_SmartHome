@@ -67,24 +67,24 @@ def detection():
         cv2.destroyAllWindows()
     return 0
 
-pir = MotionSensor(17)
-def main():
-
-    while True:
-        num_people=0
-        #LED.off()
-        # while True:
-        pir.wait_for_motion()
-        num_people = detection()
-        while num_people>0:
-            led.on()
-            num_people=detection()
-        print(num_people)
-        # time.sleep(1)
-        #LED.on()
-        print("motion detected")
-        pir.wait_for_no_motion()
-        led.off()
-        # time.sleep(1)
-        print("motion not detected")
-        #LED.off()
+# pir = MotionSensor(17)
+# def main():
+#
+#     while True:
+#         num_people=0
+#         #LED.off()
+#         # while True:
+#         pir.wait_for_motion()
+#         num_people = detection()
+#         while num_people>0:
+#             led.on()
+#             num_people=detection()
+#         print(num_people)
+#         # time.sleep(1)
+#         #LED.on()
+#         print("motion detected")
+#         pir.wait_for_no_motion()
+#         led.off()
+#         # time.sleep(1)
+#         print("motion not detected")
+#         #LED.off()
