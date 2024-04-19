@@ -78,8 +78,11 @@ def start_temperature_record():
 def home():
     start_motion_sense()
     start_temperature_record()
-    #start_current_record()
-    return "Temperature values: {}".format(temperature_values)
+    start_current_record()
+    outPut_dic={"Temperature":temperature_values,
+                "Current":Current_values}
+    return jsonify(outPut_dic)
+
 
 
 if __name__ == '__main__':
