@@ -4,6 +4,12 @@ from flask import request, jsonify
 import plotly.express as px
 import pandas as pd
 import json
+import notification as nt
+import reports as rpt
+import logout as lg
+import dashboard as db
+import time
+from streamlit_option_menu import option_menu
 import threading
 
 #sidebar 1
@@ -26,7 +32,8 @@ if selected == "Notifications":
     st.markdown("## Notifications")
     nt.notify()
 if selected == "Reports":
-    st.markdown("## Reports")rpt.dropdown()
+    st.markdown("## Reports")
+    rpt.dropdown()
 
 
 FinalTemp =[]
