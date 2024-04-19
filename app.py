@@ -78,8 +78,25 @@ def start_temperature_record():
 def home():
     start_motion_sense()
     start_temperature_record()
-    #start_current_record()
-    return "Temperature values: {}".format(temperature_values)
+    start_current_record()
+    outPut_dic={"Temperature":temperature_values,
+                "Current":Current_values}
+    return jsonify(outPut_dic)
+    
+@app.route("/dashboard")
+def dashboard():
+    start_temperature_record()
+    return jsonify({"temperature_values": temperature_values})
+
+@app.route('/send_data', methods=['GET'])
+def send_data():
+    #data = {'message': 'Hello from Flask!'}
+    # Assuming your Streamlit app is running on http://localhost:8501
+    streamlit_url = 'http://localhost:8501'
+    outPut_dic={"Temperature":temperature_values,
+                "Current":Current_values}
+    requests.post(streamlit_url, json=outPut_dic)
+    return jsonify(outPut_dic)
 
 
 if __name__ == '__main__':
